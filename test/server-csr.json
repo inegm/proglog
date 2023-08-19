@@ -1,0 +1,19 @@
+{
+    "CN": "::",  // FIXME (inegm): was "127.0.0.1" in the book but tests fail
+    "hosts": [
+        "localhost",
+        "::"  // FIXME (inegm): was "127.0.0.1" in the book but tests fail
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "FR",
+            "L": "PLUMELEC",
+            "ST": "56",
+            "O": "inegm/proglog"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "CN": "inegm/proglog CA",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "FR",
+            "L": "PLUMELEC",
+            "ST": "56",
+            "O": "inegm/proglog"
+        }
+    ]
+}
