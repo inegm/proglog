@@ -72,7 +72,7 @@ func (r *Replicator) replicate(addr string, leave chan struct{}) {
 		select {
 		case <-r.close:
 			return
-		case <-r.leave:
+		case <-leave:
 			return
 		case record := <-records:
 			_, err = r.LocalServer.Produce(
