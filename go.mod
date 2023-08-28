@@ -10,7 +10,7 @@ require (
 	go.opencensus.io v0.22.2
 	go.uber.org/zap v1.25.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230525234030-28d5490b6b19
-	google.golang.org/grpc v1.57.0
+	google.golang.org/grpc v1.32.0
 	google.golang.org/protobuf v1.31.0
 )
 
