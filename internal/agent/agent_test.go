@@ -11,6 +11,7 @@ import (
 	api "github.com/inegm/proglog/api/v1"
 	"github.com/inegm/proglog/internal/agent"
 	"github.com/inegm/proglog/internal/config"
+	"github.com/inegm/proglog/internal/loadbalancer"
 	"github.com/stretchr/testify/require"
 	"github.com/travisjeffery/go-dynaport"
 	"google.golang.org/grpc"
@@ -84,6 +85,10 @@ func TestAgent(t *testing.T) {
 			Record: &api.Record{Value: []byte("hello world")},
 		},
 	)
+
+	// wait until replication has finished
+	time.Sleep(3 * time.Second)
+
 	require.NoError(t, err)
 	consumeResponse, err := leaderClient.Consume(
 		context.Background(),
@@ -91,9 +96,6 @@ func TestAgent(t *testing.T) {
 	)
 	require.NoError(t, err)
 	require.Equal(t, consumeResponse.Record.Value, []byte("hello world"))
-
-	// wait until replication has finished
-	time.Sleep(3 * time.Second)
 
 	followerClient := client(t, agents[1], peerTLSConfig)
 	consumeResponse, err = followerClient.Consume(
@@ -123,7 +125,10 @@ func client(
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(tlsCreds)}
 	rpcAddr, err := agent.Config.RPCAddr()
 	require.NoError(t, err)
-	conn, err := grpc.Dial(rpcAddr, opts...)
+	conn, err := grpc.Dial(
+		fmt.Sprintf("%s:///%s", loadbalancer.Name, rpcAddr),
+		opts...,
+	)
 	require.NoError(t, err)
 	client := api.NewLogClient(conn)
 	return client
