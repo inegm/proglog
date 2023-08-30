@@ -44,7 +44,7 @@ $(CONFIG_PATH)/policy.csv:
 test: $(CONFIG_PATH)/policy.csv $(CONFIG_PATH)/model.conf
 	go test -race ./...
 
-.PHONY: conpile
+.PHONY: compile
 compile:
 	protoc api/v1/*.proto \
 		--go_out=. \
@@ -56,4 +56,4 @@ compile:
 TAG ?= 0.0.1
 
 build-docker:
-	docker build -t github.com/inegm/proglog:$(TAG) .
+	docker build -t inegm/proglog:$(TAG) .
